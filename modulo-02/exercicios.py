@@ -123,7 +123,10 @@ def ex05_buscador_break():
     estoque = ["Teclado", "Mouse", "Webcam", "Monitor", "Headset", "Notebook"]
 
     # SUA SOLUÇÃO AQUI
-    pass
+    for posicao, item in enumerate(estoque):
+        if item == "Monitor":
+            print(f"Monitor encontrado na posição {posicao}")
+            break
 
 
 # ==============================================================
@@ -138,8 +141,22 @@ def ex06_filtro_continue():
     leituras = [12.5, None, 8.3, None, 15.0, 9.7, None, 11.2, 6.8, None]
 
     # SUA SOLUÇÃO AQUI
-    pass
+    soma = 0
+    total = 0
+    ignorados = 0
 
+    for leitura in leituras:
+        if leitura is None:
+            ignorados += 1
+            continue
+        soma += leitura
+        total += 1
+
+    media = soma / total
+
+    print(f"Soma: {soma}")
+    print(f"Média: {media:.2f}")
+    print(f"Total ignorado: {ignorados}")
 
 # ==============================================================
 # EXERCÍCIO 07 – Validação de Entrada com while
@@ -157,8 +174,22 @@ def ex07_validacao_nota():
         < 5.0      → D – Insuficiente
     """
     # SUA SOLUÇÃO AQUI
-    pass
+    while True:
+        nota = float(input("Digite a nota do aluno (0 a 10): "))
 
+        if nota < 0 or nota > 10:
+            print("Nota inválida! Digite uma nota entre 0 e 10.")
+        else:
+            break
+
+    if nota >= 9:
+        print("A – Excelente")
+    elif nota >= 7:
+        print("B – Bom")
+    elif nota >= 5:
+        print("C – Regular")
+    else:
+        print("D – Insuficiente")
 
 # ==============================================================
 # EXERCÍCIO 08 – Calculadora com try/except
@@ -171,7 +202,31 @@ def ex08_calculadora_segura():
     Usa else para exibir o resultado e finally para encerrar.
     """
     # SUA SOLUÇÃO AQUI
-    pass
+    try:
+        num1 = float(input("Digite o primeiro número: "))
+        num2 = float(input("Digite o segundo número: "))
+        operacao = input("Digite a operação (+, -, *, /): ")
+
+        if operacao == "+":
+            resultado = num1 + num2
+        elif operacao == "-":
+            resultado = num1 - num2
+        elif operacao == "*":
+            resultado = num1 * num2
+        elif operacao == "/":
+            resultado = num1 / num2
+        else:
+            print("Operação inválida!")
+            return
+
+    except ValueError:
+        print("Erro: digite números válidos!")
+    except ZeroDivisionError:
+        print("Erro: não é possível dividir por zero!")
+    else:
+        print(f"Resultado: {resultado}")
+    finally:
+        print("Calculadora encerrada.")
 
 
 # ==============================================================
@@ -190,7 +245,15 @@ def ex09_padrao_numerico():
     Desafio extra: gera também o triângulo decrescente logo abaixo.
     """
     # SUA SOLUÇÃO AQUI
-    pass
+    for i in range(1, 6):
+        for j in range(1, i + 1):
+            print(j, end=" ")
+        print()
+
+    for i in range(4, 0, -1):
+        for j in range(1, i + 1):
+            print(j, end=" ")
+        print()
 
 
 # ==============================================================
@@ -207,7 +270,22 @@ def ex10_jogo_adivinhacao():
     numero_secreto = random.randint(1, 100)
 
     # SUA SOLUÇÃO AQUI
-    pass
+    tentativas = 0
+
+    while tentativas < 7:
+        palpite = int(input("Digite um número entre 1 e 100: "))
+        tentativas += 1
+
+        if palpite == numero_secreto:
+            print("Parabéns! Você acertou!")
+            break
+        elif palpite < numero_secreto:
+            print("O número secreto é maior!")
+        else:
+            print("O número secreto é menor!")
+
+    else:
+        print(f"Você perdeu! O número era {numero_secreto}.")
 
 
 # ==============================================================
@@ -222,7 +300,26 @@ def ex11_numero_primo():
     Otimização: verifica divisores somente até √n.
     """
     # SUA SOLUÇÃO AQUI
-    pass
+    try:
+        numero = int(input("Digite um número inteiro positivo: "))
+
+        if numero <= 0:
+            print("Digite um número maior que zero.")
+            return
+
+        if numero == 1:
+            print("Não é primo.")
+            return
+
+        for i in range(2, int(numero ** 0.5) + 1):
+            if numero % i == 0:
+                print("Não é primo.")
+                break
+        else:
+            print("É primo!")
+
+    except ValueError:
+        print("Erro: digite um número inteiro válido.")
 
 
 # ==============================================================
@@ -241,7 +338,28 @@ def ex12_analisador_senha():
     Exibe relatório com ✅ ou ❌ para cada critério.
     """
     # SUA SOLUÇÃO AQUI
-    pass
+    senha = input("Digite uma senha: ")
+
+    maiuscula = False
+    minuscula = False
+    digito = False
+    especial = False
+
+    for caractere in senha:
+        if caractere.isupper():
+            maiuscula = True
+        if caractere.islower():
+            minuscula = True
+        if caractere.isdigit():
+            digito = True
+        if caractere in "!@#$%^&*":
+            especial = True
+
+    print(f"{'✅' if len(senha) >= 8 else '❌'} Mínimo de 8 caracteres")
+    print(f"{'✅' if maiuscula else '❌'} Pelo menos 1 maiúscula")
+    print(f"{'✅' if minuscula else '❌'} Pelo menos 1 minúscula")
+    print(f"{'✅' if digito else '❌'} Pelo menos 1 dígito")
+    print(f"{'✅' if especial else '❌'} Pelo menos 1 caractere especial")
 
 
 # ==============================================================
@@ -257,8 +375,20 @@ def ex13_caixa_eletronico():
     cedulas = [200, 100, 50, 20, 10]
 
     # SUA SOLUÇÃO AQUI
-    pass
+    try:
+        valor = int(input("Digite o valor do saque (máximo R$ 3.000): "))
 
+        if valor <= 0 or valor > 3000 or valor % 10 != 0:
+            print("Valor inválido! Digite um valor múltiplo de R$ 10, entre R$ 10 e R$ 3.000.")
+        else:
+            for cedula in cedulas:
+                quantidade = valor // cedula
+                if quantidade > 0:
+                    print(f"{quantidade} cédula(s) de R$ {cedula}")
+                    valor %= cedula
+
+    except ValueError:
+        print("Erro: digite um valor inteiro válido.")
 
 # ==============================================================
 # EXERCÍCIO 14 – Leitura de Múltiplos Dados com Tratamento
@@ -273,39 +403,33 @@ def ex14_leitura_notas_turma():
     notas = []
 
     # SUA SOLUÇÃO AQUI
-    pass
+    while True:
+        entrada = input("Digite uma nota ou 'fim' para encerrar: ")
+
+        if entrada.lower() == "fim":
+            break
+
+        try:
+            nota = float(entrada)
+        except ValueError:
+            print("Nota inválida! Tente novamente.")
+            continue
+
+        notas.append(nota)
+
+    if len(notas) > 0:
+        print(f"Total de notas: {len(notas)}")
+        print(f"Média: {sum(notas) / len(notas):.2f}")
+        print(f"Maior nota: {max(notas)}")
+        print(f"Menor nota: {min(notas)}")
+    else:
+        print("Nenhuma nota foi informada.")
 
 
 # ==============================================================
 # EXERCÍCIO 15 – Desafio Final: Menu de Sistema
 # Conceitos: while True, if/elif/else, break, continue, try/except
 # ==============================================================
-def ex15_menu_sistema():
-    """
-    Menu interativo que permanece ativo até o usuário sair.
-
-    Opções:
-        [1] Conversor de temperatura (Celsius → Fahrenheit)
-        [2] Verificador de número primo (versão simplificada)
-        [3] Analisador de senha (apenas comprimento e dígito)
-        [4] Calculadora segura (só +, -, *, /)
-        [0] Sair
-
-    Usa try/except em toda entrada do usuário.
-    """
-    while True:
-        print("\n" + "=" * 29)
-        print("   SISTEMA ITEAM - MENU    ")
-        print("=" * 29)
-        print("[1] Conversor de temperatura")
-        print("[2] Verificador de número primo")
-        print("[3] Analisador de senha")
-        print("[4] Calculadora segura")
-        print("[0] Sair")
-        print("=" * 29)
-
-        # SUA SOLUÇÃO AQUI — leia a opção e implemente cada funcionalidade
-        pass
 
 def menu():
     while True:
@@ -328,49 +452,66 @@ def menu():
         print("12 - Analisador de senha")
         print("13 - Caixa eletrônico")
         print("14 - Leitura de notas da turma")
-        print("15 - Menu do sistema")
         print("0  - Sair")
         print("=" * 50)
 
-        opcao = input("Qual exercício deseja executar? ")
+        opcao = input("Qual exercício deseja executar? ").strip()
 
-        if opcao == "1":
+        if opcao == "1" or opcao == "01":
             ex01_classificador_temperatura()
-        elif opcao == "2":
+
+        elif opcao == "2" or opcao == "02":
             ex02_validador_acesso()
-        elif opcao == "3":
+
+        elif opcao == "3" or opcao == "03":
             ex03_tabuada()
-        elif opcao == "4":
+
+        elif opcao == "4" or opcao == "04":
             ex04_contador_regressivo()
-        elif opcao == "5":
+
+        elif opcao == "5" or opcao == "05":
             ex05_buscador_break()
-        elif opcao == "6":
+
+        elif opcao == "6" or opcao == "06":
             ex06_filtro_continue()
-        elif opcao == "7":
+
+        elif opcao == "7" or opcao == "07":
             ex07_validacao_nota()
-        elif opcao == "8":
+
+        elif opcao == "8" or opcao == "08":
             ex08_calculadora_segura()
-        elif opcao == "9":
+
+        elif opcao == "9" or opcao == "09":
             ex09_padrao_numerico()
+
         elif opcao == "10":
             ex10_jogo_adivinhacao()
+
         elif opcao == "11":
             ex11_numero_primo()
+
         elif opcao == "12":
             ex12_analisador_senha()
+
         elif opcao == "13":
             ex13_caixa_eletronico()
+
         elif opcao == "14":
             ex14_leitura_notas_turma()
-        elif opcao == "15":
-            ex15_menu_sistema()
+
         elif opcao == "0":
             print("Encerrando o programa. Até mais!")
             break
+
         else:
             print("Opção inválida! Escolha um exercício de 1 a 15 ou 0 para sair.")
+            continue
 
         input("\nPressione ENTER para voltar ao menu...")
+
+
+# Executa o menu principal
+menu()
 
 # ==============================================================
 # EXECUÇÃO PRINCIPAL

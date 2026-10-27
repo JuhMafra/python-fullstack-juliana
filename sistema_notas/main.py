@@ -1,3 +1,4 @@
+
 # ============================================================
 # ARQUIVO PRINCIPAL: main.py
 # Sistema de Lançamento de Notas — Nível Fácil
@@ -20,12 +21,16 @@ def obter_turma():
     Retorno:
         str ou None
     """
-    # TODO: Use um loop while True para pedir o nome da turma com input().
-    #       Chame validar_turma() com o valor digitado.
-    #       - Se o valor digitado for "sair" (após .strip().lower()), retorne None.
-    #       - Se validar_turma() retornar True, retorne o nome da turma.
-    #       - Caso contrário, imprima uma mensagem de erro e repita o loop.
-    pass  # ← apague esta linha e escreva seu código aqui
+    while True:
+        nome_turma = input("Nome da turma: ").strip()
+
+        if nome_turma.lower() == "sair":
+            return None
+
+        if validar_turma(nome_turma):
+            return nome_turma
+
+        print("Nome da turma inválido. Tente novamente.")
 
 
 def obter_aluno():
@@ -36,9 +41,20 @@ def obter_aluno():
     Retorno:
         str ou None
     """
-    # TODO: Mesma lógica de obter_turma(), mas usando validar_aluno().
-    #       Lembre de verificar "sair" antes de validar.
-    pass  # ← apague esta linha e escreva seu código aqui
+    while True:
+        nome_aluno = input(
+            "\nNome do aluno (ou 'sair'): "
+        ).strip()
+
+        if nome_aluno.lower() == "sair":
+            return None
+
+        if validar_aluno(nome_aluno):
+            return nome_aluno
+
+        print(
+            "Nome inválido. Digite o nome e o sobrenome do aluno."
+        )
 
 
 def obter_nota(numero_da_nota):
@@ -50,12 +66,22 @@ def obter_nota(numero_da_nota):
 
     Retorno:
         float: a nota validada e convertida
+        None: se o usuário digitar "sair"
     """
-    # TODO: Use um loop while True para pedir a nota com input().
-    #       Chame validar_nota() com o valor digitado.
-    #       - Se retornar None (inválido), exiba uma mensagem de erro.
-    #       - Se retornar um float válido, retorne-o.
-    pass  # ← apague esta linha e escreva seu código aqui
+    while True:
+        valor = input(
+            f"Nota {numero_da_nota} (ou 'sair'): "
+        ).strip()
+
+        if valor.lower() == "sair":
+            return None
+
+        nota = validar_nota(valor)
+
+        if nota is not None:
+            return nota
+
+        print("Nota inválida. Digite um número entre 0 e 10.")
 
 
 def main():
@@ -67,25 +93,48 @@ def main():
     print("  Digite 'sair' a qualquer momento para encerrar")
     print("=" * 45)
 
-    # TODO (Passo 1): Chame obter_turma() para capturar o nome da turma.
-    #                 Se retornar None, imprima "Encerrando..." e encerre com return.
+    # Obtém o nome da turma.
+    turma = obter_turma()
 
-    # TODO (Passo 2): Inicie um loop while True para cadastrar múltiplos alunos.
-    #                 Dentro do loop:
-    #
-    #   a) Chame obter_aluno(). Se retornar None, quebre o loop (break).
-    #
-    #   b) Chame obter_nota(1), obter_nota(2) e obter_nota(3)
-    #      para capturar as três notas do aluno.
-    #
-    #   c) Chame salvar_nota() passando turma, aluno e as três notas.
-    #      Exiba uma mensagem de sucesso após salvar.
-    #
-    #   d) Chame ler_notas() para exibir todos os registros da turma até agora.
+    if turma is None:
+        print("\nEncerrando o sistema. Até logo!")
+        return
 
-    # TODO (Passo 3): Fora do loop, imprima uma mensagem de encerramento.
+    # Loop para cadastrar vários alunos.
+    while True:
 
-    pass  # ← apague esta linha e escreva seu código aqui
+        # Solicita o nome do aluno.
+        aluno = obter_aluno()
+
+        if aluno is None:
+            break
+
+        # Solicita as três notas.
+        nota1 = obter_nota(1)
+
+        if nota1 is None:
+            break
+
+        nota2 = obter_nota(2)
+
+        if nota2 is None:
+            break
+
+        nota3 = obter_nota(3)
+
+        if nota3 is None:
+            break
+
+        # Salva as notas do aluno.
+        salvar_nota(turma, aluno, nota1, nota2, nota3)
+
+        print("\nNota salva com sucesso!")
+
+        # Exibe todos os registros da turma.
+        ler_notas(turma)
+
+    # Mensagem de encerramento.
+    print("\nEncerrando o sistema. Até logo!")
 
 
 # ── Ponto de entrada do programa ──────────────────────────

@@ -1,2 +1,3 @@
 # Este arquivo transforma a pasta "funcoes" em um pacote Python,
 # permitindo importar seus módulos com: from funcoes.validacoes import ...
+from funcoes.validacoes import validar_nota

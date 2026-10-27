@@ -1,11 +1,16 @@
-import json
+class Animal:
+    def __init__(self,nome):
+        self.nome=nome
+    
+    def som(self):
+        return "..."
+class Gato(Animal):
+    def __init__(self,nome,cor):
+        super().__init__(nome)
+        self.cor = cor
+    
+    def som(self):
+        return "miau"
 
-dados ={"nome":"caneta","preco":2.51}
-
-with open("./dados.json","w",encoding="utf-8") as f:
-    json.dump(dados,f,ensure_ascii=False,indent=2)
-
-with open("./dados.json", encoding="utf-8") as f:
-    print(json.load(f)["nome"])
-
-print(json.dumps(dados))
+g = Gato("mimi","preto")
+print(g.nome, g.cor , g.som())
